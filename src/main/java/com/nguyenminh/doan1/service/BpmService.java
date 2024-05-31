@@ -16,6 +16,7 @@ import java.util.Optional;
 @AllArgsConstructor
 @Service
 public class BpmService {
+
     //-----------------------------------------------
     private final UserRepository userRepository;
 
@@ -30,7 +31,7 @@ public class BpmService {
 
         Optional<UserModel> userModel = userRepository.findById(userId);
         float value = bpmRequest.getValue();
-        if (userModel.isPresent()) {
+        if (userModel.isPresent() && value >= 28.0) {
             BpmModel bpmModel = BpmModel.builder()
                     .value(bpmRequest.getValue())
                     .createdAt(LocalDateTime.now())

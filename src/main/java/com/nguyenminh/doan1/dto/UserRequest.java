@@ -16,6 +16,6 @@ import java.util.List;
 public class UserRequest {
 
     private String userName ;
-
+    private String status;
 
 }

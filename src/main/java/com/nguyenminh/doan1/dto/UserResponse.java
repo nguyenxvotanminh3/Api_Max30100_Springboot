@@ -21,4 +21,5 @@ public class UserResponse {
     private List<Float> bpm;
     private List<Float> sp02;
     private String userName ;
+    private String status;
 }

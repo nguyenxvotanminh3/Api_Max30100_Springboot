@@ -1,5 +1,6 @@
 package com.nguyenminh.doan1.model;
 
+import jdk.jfr.Name;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,15 +20,16 @@ public class UserModel {
     private String userId ;
     private List<Float> bpm;
     private List<Float> sp02;
+    private String name;
     private String userName ;
     private String logInName ;
     private String password ;
+    private String roles;
+    private String status;
 
 
 
-    public void setSp02(){
 
-    }
 
 
 }
