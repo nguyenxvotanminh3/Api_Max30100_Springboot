@@ -24,30 +24,31 @@ public class SpO2Service {
         return spO2Repository.findAll();
     }
 
-   public String createSpO2(SpO2Request spO2Request , String userId){
+   public void createSpO2(SpO2Request spO2Request){
+        List<UserModel> userModelList = userRepository.findAll();
+        for(int i = 0 ; i < userModelList.size(); i++){
+            if(userModelList.get(i).getStatus().equals("Login")){
+                Optional<UserModel> userModel = userRepository.findById(userModelList.get(i).getUserId());
+                float value = spO2Request.getValue();
+                    SpO2Model spO2Model = SpO2Model.builder()
+                            .value(spO2Request.getValue())
+                            .createdAt(LocalDateTime.now())
+                            .build();
+                    spO2Model.setUserId(userModelList.get(i).getUserId());
+                    spO2Repository.save(spO2Model);
+                    //add sp02 to user
+                    userModel.ifPresent(userModel1 -> {
+                        List<Float> listSp02 = userModel.get().getSp02();
+                        listSp02.add(value);
+                        userRepository.save(userModel1);
+                    });
+                    System.out.println("spO2 of : "+ userModel.get().getUserName() +" found ");
 
-       Optional<UserModel> userModel = userRepository.findById(userId);
-       float value = spO2Request.getValue();
-       if (userModel.isPresent()) {
-           SpO2Model spO2Model = SpO2Model.builder()
-                   .value(spO2Request.getValue())
-                   .createdAt(LocalDateTime.now())
-                   .build();
-           spO2Model.setUserId(userId);
-           spO2Repository.save(spO2Model);
-           //add sp02 to user
+            } else {
+                System.out.println("No user found login ");
+            }
+        }
 
-         userModel.ifPresent(userModel1 -> {
-             List<Float> listSp02 = userModel.get().getSp02();
-             listSp02.add(value);
-             userRepository.save(userModel1);
-         });
-
-
-           return "spO2 of : "+ userModel.get().getUserName() +" found ";
-       }
-        else
-            return "No user found";
    }
 
     public List<SpO2Model> getSp02ById(String userId) {
