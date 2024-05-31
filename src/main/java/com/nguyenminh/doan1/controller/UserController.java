@@ -15,7 +15,7 @@
     @RestController
     @RequestMapping("/v1/user")
     @RequiredArgsConstructor
-    @CrossOrigin
+    @CrossOrigin(origins = "*", allowedHeaders = "*", methods = {RequestMethod.POST, RequestMethod.OPTIONS})
     public class UserController {
         //////////////////////////////////////////////////////////////////////////
         private final JwtService jwtService;

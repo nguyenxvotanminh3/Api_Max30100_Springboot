@@ -19,9 +19,9 @@ public class BpmController {
     public List<BpmModel> getAllBpm(){
         return bpmService.getAllBpm();
     }
-    @PostMapping("/create/{userId}")
-    public void createBpm (@RequestBody BpmRequest bpmRequest , @PathVariable String userId){
-        bpmService.createBpm(bpmRequest,userId);
+    @PostMapping("/create")
+    public void createBpm (@RequestBody BpmRequest bpmRequest){
+        bpmService.createBpm(bpmRequest);
     }
     @GetMapping("/{userId}")
     public List<BpmModel> getBpmById(@PathVariable String userId){

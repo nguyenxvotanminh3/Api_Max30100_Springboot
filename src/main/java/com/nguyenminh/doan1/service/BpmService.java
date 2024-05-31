@@ -27,29 +27,33 @@ public class BpmService {
     }
 
 
-    public void createBpm(BpmRequest bpmRequest, String userId){
+    public void createBpm(BpmRequest bpmRequest){
+        List<UserModel> userModelList = userRepository.findAll();
+        for(int i = 0 ; i < userModelList.size(); i++){
+            if(userModelList.get(i).getStatus().equals("Login")){
+                Optional<UserModel> userModel = userRepository.findById(userModelList.get(i).getUserId());
+                float value = bpmRequest.getValue();
+                BpmModel bpmModel = BpmModel.builder()
+                        .value(bpmRequest.getValue())
+                        .createdAt(LocalDateTime.now())
+                        .build();
+                bpmModel.setUserId(userModelList.get(i).getUserId());
+                bpmRepository.save(bpmModel);
+                //add sp02 to user
+                userModel.ifPresent(userModel1 -> {
+                    List<Float> listBpm = userModel.get().getBpm();
+                    listBpm.add(value);
+                    userRepository.save(userModel1);
+                });
 
-        Optional<UserModel> userModel = userRepository.findById(userId);
-        float value = bpmRequest.getValue();
-        if (userModel.isPresent() && value >= 28.0) {
-            BpmModel bpmModel = BpmModel.builder()
-                    .value(bpmRequest.getValue())
-                    .createdAt(LocalDateTime.now())
-                    .build();
-            bpmModel.setUserId(userId);
-            bpmRepository.save(bpmModel);
-            //add sp02 to user
-
-            userModel.ifPresent(userModel1 -> {
-                List<Float> listBpm = userModel.get().getBpm();
-                listBpm.add(value);
-                userRepository.save(userModel1);
-            });
-
-
-            userModel.get();
+                System.out.println("spO2 of : "+ userModel.get().getUserName() +" found ");
+            } else {
+                System.out.println("No user login");
+            }
         }
-    }
+
+
+        }
     public List<BpmModel> getBpmById(String userId) {
         List<BpmModel> bpmModel = bpmRepository.findAll();
 

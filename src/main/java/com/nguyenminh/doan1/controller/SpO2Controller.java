@@ -19,9 +19,9 @@ public class SpO2Controller {
     public List<SpO2Model> getAllSpO2(){
         return spO2Service.getAllSp02();
     }
-    @PostMapping("/create/{userId}")
-    public void createSpO2 (@RequestBody SpO2Request spO2Request , @PathVariable String userId){
-        spO2Service.createSpO2(spO2Request,userId);
+    @PostMapping("/create")
+    public void createSpO2 (@RequestBody SpO2Request spO2Request){
+        spO2Service.createSpO2(spO2Request);
     }
     @GetMapping("/{userId}")
     public List<SpO2Model> getAllSpO2(@PathVariable String userId){
