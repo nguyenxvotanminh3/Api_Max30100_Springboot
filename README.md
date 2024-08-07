@@ -32,6 +32,16 @@ Before you begin, ensure you have met the following requirements:
 
 ### Clone the Repository
 
-```bash
+
 git clone https://github.com/nguyenxvotanminh3/Api_Max30100_Springboot.git
 cd Api_Max30100_Springboot
+##Configure the Database
+Update the application.properties file located in src/main/resources with your database configuration:
+properties
+Copy code
+spring.datasource.url=jdbc:mysql://localhost:3306/your_database_name
+spring.datasource.username=your_database_username
+spring.datasource.password=your_database_password
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+```bash
