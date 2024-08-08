@@ -1,6 +1,5 @@
 # MAX30100 Spring Boot API
 
-![MAX30100](https://example.com/path-to-image.jpg)
 
 ## Introduction
 
